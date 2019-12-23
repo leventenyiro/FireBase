@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1079625901894",
+    "firebase_url": "https://test-bafcf.firebaseio.com",
+    "project_id": "test-bafcf",
+    "storage_bucket": "test-bafcf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1079625901894:android:4bd936ab9f30ef4c8f6747",
+        "android_client_info": {
+          "package_name": "com.leventenyiro.firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1079625901894-u1e509qh7qd9c9ao3sl4c406b7a797l6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.leventenyiro.firebase",
+            "certificate_hash": "a9df02f74ad0b8577f57deb02d684ff9623030e7"
+          }
+        },
+        {
+          "client_id": "1079625901894-kpt4l50idvbrfhuq3360uqqd1kniu9qg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7nf7Eodq99DC4WSI7JcT-upV-FqyJ5E4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1079625901894-kpt4l50idvbrfhuq3360uqqd1kniu9qg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
