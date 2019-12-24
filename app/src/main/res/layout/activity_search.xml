@@ -4,43 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
+    tools:context=".SearchActivity">
+    
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Név"
-        android:inputType="textCapWords"
         android:id="@+id/inputName" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/inputName"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:id="@+id/inputEmail" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/inputEmail"
-        android:text="Elküldés"
-        android:id="@+id/btnInsert" />
-
+    
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnSearch"
-        android:layout_below="@id/btnInsert"
+        android:layout_below="@id/inputName"
         android:text="Keresés" />
-
+    
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/textMember"
         android:layout_below="@id/btnSearch"
-        android:scrollbars="none"
+        android:id="@+id/textSearch"
         android:textSize="30sp" />
 
 </RelativeLayout>
