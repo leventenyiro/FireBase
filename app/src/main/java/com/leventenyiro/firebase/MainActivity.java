@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnInsert, btnSearch;
     private DatabaseReference ref;
     private Member member;
-    private long id, count;
+    private long id;
     private TextView textMember;
 
     @Override
@@ -37,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
 
         init();
 
+        if (isNetworkConnected())
+            select();
+        else
+            textMember.setText("Nincs intenetkapcsolat!");
+
         btnInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,22 +50,17 @@ public class MainActivity extends AppCompatActivity {
                     if (!inputName.getText().toString().isEmpty() && !inputEmail.getText().toString().isEmpty())
                     {
                         member = new Member(inputName.getText().toString(), inputEmail.getText().toString());
-                        //ref.push().setValue(member);
-                        //ref.child("member1").setValue(member);
                         Toast.makeText(MainActivity.this, "Sikeres rögzítés", Toast.LENGTH_SHORT).show();
                         inputName.setText("");
                         inputEmail.setText("");
                         ref.child(String.valueOf(id + 1)).setValue(member);
+                        select();
                     }
                     else
-                    {
                         Toast.makeText(MainActivity.this, "Valami nincs kitöltve!", Toast.LENGTH_SHORT).show();
-                    }
                 }
                 else
-                {
                     Toast.makeText(MainActivity.this, "Nincs kapcsolódva az internethez!", Toast.LENGTH_SHORT).show();
-                }
             }
         });
 
@@ -72,61 +72,6 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-        // listázás
-        if (isNetworkConnected())
-        {
-            ref.addListenerForSingleValueEvent(valueEventListener);
-
-            /*ref.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists())
-                    {
-                        id = dataSnapshot.getChildrenCount();
-                        for (int i = 1; i < id + 1; i++)
-                        {
-                            ref = FirebaseDatabase.getInstance().getReference().child("Member").child(String.valueOf(i));
-                            ref.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    textMember.append(dataSnapshot.child("name").getValue().toString() + "\n");
-                                    textMember.append(dataSnapshot.child("email").getValue().toString() + "\n\n");
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });*/
-
-            // ha egy elemet listázunk ki
-            /*ref = FirebaseDatabase.getInstance().getReference().child("Member").child("1");
-            ref.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    textMember.setText(dataSnapshot.child("name").getValue().toString());
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });*/
-        }
-        else
-        {
-            textMember.setText("Nincs intenetkapcsolat!");
-        }
     }
 
     private void init() {
@@ -140,36 +85,32 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists())
-                {
                     id = dataSnapshot.getChildrenCount();
-                }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
     }
 
-    ValueEventListener valueEventListener = new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            if (dataSnapshot.exists())
-            {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren())
+    private void select() {
+        textMember.setText("");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists())
                 {
-                    textMember.append(snapshot.child("name").getValue().toString() + "\n");
-                    textMember.append(snapshot.child("email").getValue().toString() + "\n\n");
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                    {
+                        textMember.append(snapshot.child("name").getValue().toString() + "\n");
+                        textMember.append(snapshot.child("email").getValue().toString() + "\n\n");
+                    }
                 }
             }
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-        }
-    };
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
+    }
 
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
